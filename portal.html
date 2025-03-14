@@ -1,0 +1,1955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Support Portal</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #7209b7;
+            --accent: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 400px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-close {
+            cursor: pointer;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+      /* HEADER */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+header.scrolled {
+    background-color: rgba(255, 255, 255, 0.98);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+}
+
+.logo span {
+    color: var(--secondary);
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+}
+
+.nav-links li {
+    margin-left: 30px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--dark);
+    font-weight: 500;
+    transition: color 0.3s ease;
+    position: relative;
+}
+
+.nav-links a:hover {
+    color: var(--primary);
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--primary);
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.mobile-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--dark);
+}
+
+/* Add this for mobile responsiveness */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: white;
+        flex-direction: column;
+        padding: 20px;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .nav-links.active {
+        display: flex;
+    }
+    
+    .nav-links li {
+        margin: 10px 0;
+    }
+    
+    .mobile-toggle {
+        display: block;
+    }
+}
+        /* HERO SECTION */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+            background: linear-gradient(135deg, rgba(243, 244, 246, 0.8) 0%, rgba(237, 242, 255, 0.8) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+        
+        .hero-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-text {
+            width: 50%;
+            animation: fadeInLeft 1s ease-out;
+        }
+        
+        .hero-image {
+            width: 45%;
+            animation: floatUpDown 4s ease-in-out infinite, fadeInRight 1s ease-out;
+        }
+        
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.1));
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: var(--dark);
+            position: relative;
+        }
+        
+        .hero h1 span {
+            color: var(--primary);
+            position: relative;
+        }
+        
+        .hero h1 span::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background-color: rgba(67, 97, 238, 0.2);
+            z-index: -1;
+            border-radius: 10px;
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--gray);
+            margin-bottom: 30px;
+        }
+        
+        .hero-btns {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        
+        .floating-element {
+            position: absolute;
+            background-color: var(--primary);
+            border-radius: 50%;
+            opacity: 0.1;
+            z-index: -1;
+            animation: float 15s linear infinite;
+        }
+        
+        .floating-element:nth-child(1) {
+            width: 180px;
+            height: 180px;
+            top: -90px;
+            left: 10%;
+            animation-duration: 25s;
+            animation-delay: 0s;
+        }
+        
+        .floating-element:nth-child(2) {
+            width: 100px;
+            height: 100px;
+            top: 30%;
+            right: 5%;
+            background-color: var(--accent);
+            animation-duration: 20s;
+            animation-delay: 1s;
+        }
+        
+        .floating-element:nth-child(3) {
+            width: 150px;
+            height: 150px;
+            bottom: 10%;
+            left: 15%;
+            background-color: var(--secondary);
+            animation-duration: 22s;
+            animation-delay: 2s;
+        }
+        
+        /* FEATURES SECTION */
+        .features {
+            padding: 100px 0;
+            background-color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 4px;
+            background-color: var(--primary);
+            border-radius: 2px;
+        }
+        
+        .section-header p {
+            font-size: 1.1rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 15px auto 0;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--light-gray);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary);
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 0;
+            background-color: var(--primary);
+            transition: height 0.3s ease;
+        }
+        
+        .feature-card:hover::before {
+            height: 100%;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            transition: all 0.3s ease;
+            width: 70px;
+            height: 70px;
+            background-color: rgba(67, 97, 238, 0.1);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1);
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .feature-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--accent);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+        
+        .feature-card:hover h3::after {
+            width: 60px;
+        }
+        
+        .feature-card p {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+        .welcome-section {
+            margin: 30px 0;
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .welcome-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .greeting {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .greeting span {
+            color: var(--primary);
+        }
+
+        .date-display {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .status-summary {
+            display: flex;
+            gap: 15px;
+        }
+
+        .status-item {
+            flex: 1;
+            background-color: var(--light-gray);
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .status-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        .status-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .status-icon.pending {
+            background-color: #fca311;
+        }
+
+        .status-icon.progress {
+            background-color: #3a86ff;
+        }
+
+        .status-icon.completed {
+            background-color: #2ec4b6;
+        }
+
+        .status-text {
+            flex: 1;
+        }
+
+        .status-text h4 {
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .status-text p {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .quick-actions {
+            margin: 30px 0;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .section-title {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: var(--dark);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background-color: var(--light-gray);
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .action-card {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .action-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.1);
+        }
+
+        .action-card:nth-child(1) .action-top {
+            background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+        }
+
+        .action-card:nth-child(2) .action-top {
+            background: linear-gradient(45deg, var(--secondary), #56139e);
+        }
+
+        .action-card:nth-child(3) .action-top {
+            background: linear-gradient(45deg, var(--accent), #d81b7a);
+        }
+
+        .action-top {
+            padding: 30px 20px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-icon {
+            font-size: 24px;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .action-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .action-description {
+            font-size: 14px;
+            opacity: 0.8;
+            position: relative;
+            z-index: 1;
+        }
+
+        .action-bg {
+            position: absolute;
+            right: -20px;
+            bottom: -20px;
+            font-size: 100px;
+            opacity: 0.1;
+        }
+
+        .action-bottom {
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .action-stat {
+            font-size: 13px;
+            color: var(--gray);
+        }
+
+        .action-button {
+            background-color: var(--light-gray);
+            color: var(--dark);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .action-card:hover .action-button {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .departments-hub {
+            margin: 30px 0;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .departments-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .department-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .department-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 18px rgba(0,0,0,0.1);
+        }
+
+        .department-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 24px;
+            color: white;
+            transition: transform 0.3s;
+        }
+
+        .department-card:hover .department-icon {
+            transform: scale(1.1);
+        }
+
+        .department-card:nth-child(1) .department-icon {
+            background: linear-gradient(45deg, #00b4d8, #0077b6);
+        }
+
+        .department-card:nth-child(2) .department-icon {
+            background: linear-gradient(45deg, #d00000, #9d0208);
+        }
+
+        .department-card:nth-child(3) .department-icon {
+            background: linear-gradient(45deg, #588157, #3a5a40);
+        }
+
+        .department-card:nth-child(4) .department-icon {
+            background: linear-gradient(45deg, #9e2a2b, #540b0e);
+        }
+
+        .department-card:nth-child(5) .department-icon {
+            background: linear-gradient(45deg, #723c70, #5c2751);
+        }
+
+        .department-card:nth-child(6) .department-icon {
+            background: linear-gradient(45deg, #fb8500, #f77f00);
+        }
+
+        .department-card:nth-child(7) .department-icon {
+            background: linear-gradient(45deg, #2b2d42, #14152b);
+        }
+
+        .department-card:nth-child(8) .department-icon {
+            background: linear-gradient(45deg, #6a4c93, #4a347f);
+        }
+
+        .department-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .department-status {
+            font-size: 13px;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .notifications-section {
+            margin: 30px 0;
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        .notifications-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .view-all {
+            color: var(--primary);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .notifications-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .notification-item {
+            display: flex;
+            gap: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--light-gray);
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .notification-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .notification-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-top: 5px;
+        }
+
+        .notification-dot.urgent {
+            background-color: var(--accent);
+        }
+
+        .notification-dot.info {
+            background-color: var(--primary);
+        }
+
+        .notification-dot.success {
+            background-color: #2ec4b6;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .notification-text {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 8px;
+        }
+
+        .notification-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .notification-time {
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        .notification-action {
+            font-size: 13px;
+            color: var(--primary);
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .feedback-section {
+            margin: 30px 0;
+            display: flex;
+            gap: 20px;
+            animation: fadeInUp 1.4s ease-out;
+        }
+
+        .feedback-card {
+            flex: 1;
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .feedback-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .feedback-card-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .feedback-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        .feedback-card:nth-child(1) .feedback-icon {
+            background: linear-gradient(45deg, var(--accent), #d81b7a);
+        }
+
+        .feedback-card:nth-child(2) .feedback-icon {
+            background: linear-gradient(45deg, var(--secondary), #56139e);
+        }
+
+        .feedback-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .feedback-description {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+
+        .feedback-button {
+            background-color: var(--light-gray);
+            color: var(--dark);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            display: inline-block;
+        }
+
+        .feedback-card:hover .feedback-button {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-link {
+            color: var(--light-gray);
+            font-size: 14px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-link:hover {
+            color: white;
+        }
+
+        .copyright {
+            font-size: 14px;
+            color: var(--light-gray);
+        }
+
+        /* User dropdown */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 50px;
+            background-color: white;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            z-index: 10;
+            animation: fadeInDown 0.3s ease-out;
+        }
+
+        .dropdown-content.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--light-gray);
+        }
+
+        .dropdown-item i {
+            color: var(--gray);
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background-color: var(--light-gray);
+            margin: 5px 0;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .actions-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .departments-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .departments-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .status-summary {
+                flex-direction: column;
+            }
+            .feedback-section {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .actions-grid {
+                grid-template-columns: 1fr;
+            }
+            .welcome-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    const mobileToggle = document.getElementById('mobileToggle');
+    const navLinks = document.querySelector('.nav-links');
+    
+    mobileToggle.addEventListener('click', function() {
+        navLinks.classList.toggle('active');
+    });
+    
+    // Header scroll effect
+    window.addEventListener('scroll', function() {
+        const header = document.querySelector('header');
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+});
+document.querySelectorAll('.action-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const modal = document.getElementById('modal');
+                    modal.style.display = 'flex';
+                });
+            });
+
+            document.getElementById('modal-close').addEventListener('click', function() {
+                document.getElementById('modal').style.display = 'none';
+            });
+    </script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Uni<span>Connect</span></div>
+                <button class="mobile-toggle" id="mobileToggle">☰</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="welcome-section">
+            <div class="welcome-header">
+                <h1 class="greeting">Welcome back,</h1>
+                <div class="date-display">Wednesday, March 12, 2025</div>
+            </div>
+            <div class="status-summary">
+                <div class="status-item">
+                    <div class="status-icon pending">📝</div>
+                    <div class="status-text">
+                        <h4>Pending Requests</h4>
+                        <p>2</p>
+                    </div>
+                </div>
+                <div class="status-item">
+                    <div class="status-icon progress">🔄</div>
+                    <div class="status-text">
+                        <h4>In Progress</h4>
+                        <p>1</p>
+                    </div>
+                </div>
+                <div class="status-item">
+                    <div class="status-icon completed">✅</div>
+                    <div class="status-text">
+                        <h4>Completed</h4>
+                        <p>8</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+       
+
+        <section class="quick-actions">
+            <h2 class="section-title">Quick Actions</h2>
+            <div class="actions-grid">
+                <div class="action-card">
+                    <div class="action-top">
+                        <div class="action-icon">📋</div>
+                        <h3 class="action-title">Submit a New Request</h3>
+                        <p class="action-description">File a new support request or issue</p>
+                        <div class="action-bg">📋</div>
+                    </div>
+                    <div class="action-bottom">
+                        <span class="action-stat">Average response: 2 hours</span>
+                        <button class="action-button">Create Now</button>
+                    </div>
+                </div>
+                <div class="action-card">
+                    <div class="action-top">
+                        <div class="action-icon">🔍</div>
+                        <h3 class="action-title">Track My Requests</h3>
+                        <p class="action-description">View status of all your requests</p>
+                        <div class="action-bg">🔍</div>
+                    </div>
+                    <div class="action-bottom">
+                        <span class="action-stat">3 active tickets</span>
+                        <button class="action-button">View All</button>
+                    </div>
+                </div>
+                <div class="action-card">
+                    <div class="action-top">
+                        <div class="action-icon">💬</div>
+                        <h3 class="action-title">Live Chat Support</h3>
+                        <p class="action-description">Connect with support staff</p>
+                        <div class="action-bg">💬</div>
+                    </div>
+                    <div class="action-bottom">
+                        <span class="action-stat">5 agents online</span>
+                        <button class="action-button">Start Chat</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Modal for Submit New Request -->
+<div id="requestModal" class="modal">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <h2>Submit a New Request</h2>
+        <form id="requestForm">
+            <label for="requestTitle">Title:</label>
+            <input type="text" id="requestTitle" name="requestTitle" placeholder="Enter request title" required>
+
+            <label for="requestCategory">Category:</label>
+            <select id="requestCategory" name="requestCategory">
+                <option value="IT Support">IT Support</option>
+                <option value="Academic Services">Academic Services</option>
+                <option value="Financial Aid">Financial Aid</option>
+                <option value="Housing Services">Housing Services</option>
+            </select>
+
+            <label for="requestDetails">Description:</label>
+            <textarea id="requestDetails" name="requestDetails" placeholder="Provide detailed information" required></textarea>
+
+            <button type="submit" class="submit-btn">Submit Request</button>
+        </form>
+    </div>
+</div>
+
+<!-- JavaScript Submit a New Request for Modal -->
+<script>
+    document.querySelector('.action-button').addEventListener('click', function() {
+        document.getElementById('requestModal').style.display = 'flex';
+    });
+
+    function closeModal() {
+        document.getElementById('requestModal').style.display = 'none';
+    }
+
+    // Handle form submission (Example: Alert success message)
+    document.getElementById('requestForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        alert('Your request has been submitted successfully!');
+        closeModal();
+    });
+</script>
+
+<!-- CSS for Modal Styling -->
+<style>
+    .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    width: 500px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-close {
+    cursor: pointer;
+    color: var(--accent);
+    font-weight: bold;
+    float: right;
+    font-size: 20px;
+}
+
+.requests-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.requests-table th, .requests-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.requests-table th {
+    background-color: var(--primary);
+    color: white;
+}
+
+.status {
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.status.pending {
+    background-color: #fca311;
+    color: white;
+}
+
+.status.in-progress {
+    background-color: #3a86ff;
+    color: white;
+}
+
+.status.completed {
+    background-color: #2ec4b6;
+    color: white;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        width: 400px;
+        text-align: center;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .modal-close {
+        cursor: pointer;
+        color: var(--accent);
+        font-weight: bold;
+        float: right;
+        font-size: 20px;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        text-align: left;
+    }
+
+    input, select, textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid var(--gray);
+        border-radius: 6px;
+        font-size: 14px;
+    }
+
+    textarea {
+        resize: vertical;
+        height: 80px;
+    }
+
+    .submit-btn {
+        background: var(--primary);
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .submit-btn:hover {
+        background: var(--primary-dark);
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+    .chat-modal {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    right: 20px;
+    width: 350px;
+    background: rgba(255, 255, 255, 0);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 1000;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.chat-modal.open {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.chat-container {
+    background: white;
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    transform: translateY(30px);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.chat-modal.open .chat-container {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.chat-header {
+    background: var(--primary);
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-close {
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.chat-body {
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 15px;
+    background: var(--light-gray);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.chat-bubble {
+    max-width: 80%;
+    padding: 12px;
+    border-radius: 15px;
+    font-size: 14px;
+    line-height: 1.5;
+    position: relative;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.chat-bubble.bot {
+    background: var(--primary);
+    color: white;
+    align-self: flex-start;
+}
+
+.chat-bubble.user {
+    background: var(--accent);
+    color: white;
+    align-self: flex-end;
+}
+
+.chat-bubble.typing span {
+    display: inline-block;
+    animation: typingDots 1s infinite;
+}
+
+.chat-footer {
+    padding: 10px;
+    background: white;
+    display: flex;
+    border-top: 1px solid var(--gray);
+}
+
+.chat-footer input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.chat-footer button {
+    background: var(--primary);
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    margin-left: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.chat-footer button:hover {
+    background: var(--primary-dark);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes typingDots {
+    0% { content: "."; }
+    33% { content: ".."; }
+    66% { content: "..."; }
+}
+
+</style>
+<!-- Modal for Tracking Requests -->
+<div id="trackRequestsModal" class="modal">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeTrackModal()">&times;</span>
+        <h2>Your Active Requests</h2>
+        <table class="requests-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Category</th>
+                    <th>Status</th>
+                    <th>Date Submitted</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>#IT-2025-0342</td>
+                    <td>IT Support</td>
+                    <td class="status in-progress">In Progress</td>
+                    <td>March 10, 2025</td>
+                </tr>
+                <tr>
+                    <td>#AC-2025-0189</td>
+                    <td>Academic Services</td>
+                    <td class="status pending">Pending</td>
+                    <td>March 12, 2025</td>
+                </tr>
+                <tr>
+                    <td>#FA-2025-0075</td>
+                    <td>Financial Aid</td>
+                    <td class="status completed">Completed</td>
+                    <td>March 5, 2025</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- JavaScript for Track My Requests Modal Functionality -->
+<script>
+    document.querySelectorAll('.action-button')[1].addEventListener('click', function() {
+        document.getElementById('trackRequestsModal').style.display = 'flex';
+    });
+
+    function closeTrackModal() {
+        document.getElementById('trackRequestsModal').style.display = 'none';
+    }
+
+    // Close modal if user clicks outside content
+    window.onclick = function(event) {
+        const modal = document.getElementById('trackRequestsModal');
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    };
+</script>
+<!-- Live Chat Support Modal -->
+<div id="chatModal" class="chat-modal">
+    <div class="chat-container">
+        <div class="chat-header">
+            <h3>Live Support Chat</h3>
+            <span class="chat-close" onclick="closeChat()">&times;</span>
+        </div>
+        <div class="chat-body" id="chatBody">
+            <div class="chat-bubble bot">
+                <span>👋 Hello! How can I assist you today?</span>
+            </div>
+        </div>
+        <div class="chat-footer">
+            <input type="text" id="chatInput" placeholder="Type your message..." onkeypress="handleChat(event)">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript for Chat Functionality -->
+<script>
+    document.querySelectorAll('.action-button')[2].addEventListener('click', function() {
+        document.getElementById('chatModal').style.display = 'flex';
+        setTimeout(() => document.getElementById('chatModal').classList.add('open'), 100);
+    });
+
+    function closeChat() {
+        document.getElementById('chatModal').classList.remove('open');
+        setTimeout(() => document.getElementById('chatModal').style.display = 'none', 300);
+    }
+
+    function handleChat(event) {
+        if (event.key === "Enter") {
+            sendMessage();
+        }
+    }
+
+    function sendMessage() {
+        let inputField = document.getElementById('chatInput');
+        let message = inputField.value.trim();
+        if (message === "") return;
+
+        let chatBody = document.getElementById('chatBody');
+
+        // Add user message
+        let userBubble = document.createElement('div');
+        userBubble.classList.add('chat-bubble', 'user');
+        userBubble.innerHTML = `<span>${message}</span>`;
+        chatBody.appendChild(userBubble);
+
+        inputField.value = "";
+        chatBody.scrollTop = chatBody.scrollHeight;
+
+        // Simulate bot typing response
+        setTimeout(() => {
+            let botBubble = document.createElement('div');
+            botBubble.classList.add('chat-bubble', 'bot', 'typing');
+            botBubble.innerHTML = `<span>...</span>`;
+            chatBody.appendChild(botBubble);
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+            setTimeout(() => {
+                botBubble.classList.remove('typing');
+                botBubble.innerHTML = `<span>Thank you for reaching out! A support agent will be with you shortly. 😊</span>`;
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 1500);
+        }, 1000);
+    }
+</script>
+<!-- Feedback Modal -->
+<div id="feedbackModal" class="modal">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeFeedbackModal()">&times;</span>
+        <h2>Provide Feedback</h2>
+        <form id="feedbackForm">
+            <label for="feedbackName">Your Name:</label>
+            <input type="text" id="feedbackName" placeholder="Enter your name" required>
+
+            <label for="feedbackType">Feedback Type:</label>
+            <select id="feedbackType" required>
+                <option value="General">General</option>
+                <option value="Website">Website</option>
+                <option value="Service">Service</option>
+            </select>
+
+            <label for="feedbackMessage">Your Feedback:</label>
+            <textarea id="feedbackMessage" placeholder="Write your feedback here..." required></textarea>
+
+            <button type="submit" class="submit-btn">Submit Feedback</button>
+        </form>
+    </div>
+</div>
+
+<!-- Report a Problem Modal -->
+<div id="problemModal" class="modal">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeProblemModal()">&times;</span>
+        <h2>Report a Problem</h2>
+        <form id="problemForm">
+            <label for="problemName">Your Name:</label>
+            <input type="text" id="problemName" placeholder="Enter your name" required>
+
+            <label for="problemCategory">Issue Category:</label>
+            <select id="problemCategory" required>
+                <option value="Technical">Technical</option>
+                <option value="Account">Account</option>
+                <option value="Billing">Billing</option>
+            </select>
+
+            <label for="problemDetails">Describe the Issue:</label>
+            <textarea id="problemDetails" placeholder="Provide details of the issue..." required></textarea>
+
+            <button type="submit" class="submit-btn">Submit Report</button>
+        </form>
+    </div>
+</div>
+
+<!-- JavaScript for Modal Functionality -->
+<script>
+    // Get the buttons
+    const feedbackButton = document.querySelector('.feedback-button:first-of-type');
+    const problemButton = document.querySelector('.feedback-button:last-of-type');
+
+    // Get the modals
+    const feedbackModal = document.getElementById('feedbackModal');
+    const problemModal = document.getElementById('problemModal');
+
+    // Open modals
+    feedbackButton.addEventListener('click', function() {
+        feedbackModal.style.display = 'flex';
+    });
+
+    problemButton.addEventListener('click', function() {
+        problemModal.style.display = 'flex';
+    });
+
+    // Close modals
+    function closeFeedbackModal() {
+        feedbackModal.style.display = 'none';
+    }
+
+    function closeProblemModal() {
+        problemModal.style.display = 'none';
+    }
+
+    // Close modal if user clicks outside content
+    window.onclick = function(event) {
+        if (event.target === feedbackModal) {
+            closeFeedbackModal();
+        }
+        if (event.target === problemModal) {
+            closeProblemModal();
+        }
+    };
+
+    // Handle Form Submission
+    document.getElementById('feedbackForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        alert('Thank you for your feedback! 🎉');
+        closeFeedbackModal();
+    });
+
+    document.getElementById('problemForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        alert('Your issue has been reported successfully! ✅');
+        closeProblemModal();
+    });
+</script>
+<style>
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+        animation: fadeIn 0.3s ease;
+    }
+    
+    .modal-content {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        width: 400px;
+        text-align: center;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        transform: translateY(-20px);
+        opacity: 0;
+        animation: slideIn 0.3s ease forwards;
+    }
+    
+    .modal-close {
+        cursor: pointer;
+        color: var(--accent);
+        font-weight: bold;
+        float: right;
+        font-size: 20px;
+    }
+    
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        text-align: left;
+    }
+    
+    input, select, textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid var(--gray);
+        border-radius: 6px;
+        font-size: 14px;
+    }
+    
+    textarea {
+        resize: vertical;
+        height: 80px;
+    }
+    
+    .submit-btn {
+        background: var(--primary);
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+    
+    .submit-btn:hover {
+        background: var(--primary-dark);
+    }
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+    
+    @keyframes slideIn {
+        from {
+            transform: translateY(-20px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+    </style>
+    
+
+
+  <section class="departments-hub">
+            <h2 class="section-title">Departmental Services</h2>
+            <div class="departments-grid">
+                <div class="department-card">
+                    <div class="department-icon">💻</div>
+                    <h3 class="department-title">IT Support</h3>
+                    <p class="department-status">Available</p>
+                </div>
+                <div class="department-card">
+                    <div class="department-icon">📚</div>
+                    <h3 class="department-title">Academic Services</h3>
+                    <p class="department-status">Available</p>
+                </div>
+                <div class="department-card">
+                    <div class="department-icon">💰</div>
+                    <h3 class="department-title">Financial Aid</h3>
+                    <p class="department-status">Available</p>
+                </div>
+                <div class="department-card">
+                    <div class="department-icon">🏠</div>
+                    <h3 class="department-title">Housing Services</h3>
+                    <p class="department-status">Limited</p>
+                </div>
+                <div class="department-card">
+                    <div class="department-icon">🍽</div>
+                    <h3 class="department-title">Dining Services</h3>
+                    <p class="department-status">Available</p>
+                </div>
+                <div class="department-card">
+                    <div class="department-icon">🏆</div>
+                    <h3 class="department-title">Athletics</h3>
+                    <p class="department-status">Available</p>
+                </div>
+                <div class="department-card">
+                    <div class="department-icon">🏥</div>
+                    <h3 class="department-title">Health Services</h3>
+                    <p class="department-status">Available</p>
+                </div>
+                <div class="department-card">
+                    <div class="department-icon">🎓</div>
+                    <h3 class="department-title">Career Center</h3>
+                    <p class="department-status">Available</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="notifications-section">
+            <div class="notifications-header">
+                <h2 class="section-title" style="margin-bottom: 0;">Recent Notifications</h2>
+                <div class="view-all">View all <i>→</i></div>
+            </div>
+            <div class="notifications-list">
+                <div class="notification-item">
+                    <div class="notification-dot urgent"></div>
+                    <div class="notification-content">
+                        <h3 class="notification-title">IT Support Request Updated</h3>
+                        <p class="notification-text">Your WiFi connectivity issue request (ID: #IT-2025-0342) has been updated by the support team.</p>
+                        <div class="notification-meta">
+                            <span class="notification-time">Today, 9:24 AM</span>
+                            <span class="notification-action">View Details</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="notification-item">
+                    <div class="notification-dot info"></div>
+                    <div class="notification-content">
+                        <h3 class="notification-title">Campus-wide Announcement</h3>
+                        <p class="notification-text">Spring Break hours for all campus facilities have been posted. Please check the university calendar for details.</p>
+                        <div class="notification-meta">
+                            <span class="notification-time">Yesterday, 4:15 PM</span>
+                            <span class="notification-action">Read More</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="notification-item">
+                    <div class="notification-dot success"></div>
+                    <div class="notification-content">
+                        <h3 class="notification-title">Financial Aid Update</h3>
+                        <p class="notification-text">Your financial aid application for Fall 2025 has been processed successfully. Please check your profile for details.</p>
+                        <div class="notification-meta">
+                            <span class="notification-time">March 10, 2025</span>
+                            <span class="notification-action">View Details</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="feedback-section">
+            <div class="feedback-card">
+                <div class="feedback-card-header">
+                    <div class="feedback-icon">💡</div>
+                    <div>
+                        <h3 class="feedback-title">Provide Feedback</h3>
+                        <p class="feedback-description">Share your thoughts about our services and how we can improve</p>
+                    </div>
+                </div>
+                <button class="feedback-button">Give Feedback</button>
+            </div>
+            <div class="feedback-card">
+                <div class="feedback-card-header">
+                    <div class="feedback-icon">🛠</div>
+                    <div>
+                        <h3 class="feedback-title">Report a Problem</h3>
+                        <p class="feedback-description">Encountered an issue with the portal? Let us know!</p>
+                    </div>
+                </div>
+                <button class="feedback-button">Report Issue</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-links">
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">Terms of Service</a>
+                <a href="#" class="footer-link">Accessibility</a>
+                <a href="#" class="footer
