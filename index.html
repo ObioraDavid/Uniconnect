@@ -950,6 +950,7 @@
                     <li><a href="#testimonials">Testimonials</a></li>
                     <li><a href="#faq">FAQ</a></li>
                     <li><a href="#" class="btn btn-secondary">Log In</a></li>
+                    <li><a href="#" class="btn btn-secondary admin-login-btn">Admin</a></li>
                 </ul>
             </nav>
         </div>
@@ -1003,6 +1004,132 @@
         </form>
     </div>
 </div>
+<!-- ADMIN LOGIN MODAL -->
+<div id="admin-login-modal" class="login-modal">
+    <div class="login-container">
+        <div class="login-header">
+            <h2>Administrator Login</h2>
+            <span class="close-btn">&times;</span>
+        </div>
+        <form id="admin-login-form">
+            <div class="form-group">
+                <label for="admin-id">Admin ID</label>
+                <input type="text" id="admin-id" placeholder="Enter your administrator ID" required>
+                <span class="error-message" id="admin-id-error"></span>
+            </div>
+            <div class="form-group">
+                <label for="admin-password">Password</label>
+                <input type="password" id="admin-password" required>
+                <span class="error-message" id="admin-password-error"></span>
+            </div>
+            <div class="form-footer">
+                <button type="submit" class="btn">Login</button>
+                <div class="form-options">
+                    <a href="#" id="forgot-admin-password">Forgot Password?</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+/* Admin Login Modal Styles */
+.login-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    backdrop-filter: blur(5px);
+}
+
+.login-modal.active {
+    display: flex;
+    opacity: 1;
+}
+
+.login-container {
+    background-color: white;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 450px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    transform: translateY(50px) scale(0.95);
+    opacity: 0;
+    transition: all 0.5s ease;
+}
+
+.login-modal.active .login-container {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+}
+
+.close-btn {
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+.close-btn:hover {
+    transform: rotate(90deg);
+}
+
+</style>
+
+<script>
+// Admin Login Modal Functionality
+document.addEventListener('DOMContentLoaded', () => {
+    const adminLoginBtn = document.querySelector('.admin-login-btn');
+    const adminLoginModal = document.getElementById('admin-login-modal');
+    const adminCloseBtn = adminLoginModal.querySelector('.close-btn');
+
+    // Open admin login modal
+    adminLoginBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        adminLoginModal.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent scrolling
+    });
+
+    // Close admin login modal
+    function closeAdminModal() {
+        adminLoginModal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    adminCloseBtn.addEventListener('click', closeAdminModal);
+
+    // Close when clicking outside the modal
+    adminLoginModal.addEventListener('click', (e) => {
+        if (e.target === adminLoginModal) {
+            closeAdminModal();
+        }
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && adminLoginModal.classList.contains('active')) {
+            closeAdminModal();
+        }
+    });
+
+    // Admin Login Form Submission
+    document.getElementById('admin-login-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        alert('Admin Login Successful'); // Replace with actual authentication logic
+        closeAdminModal();
+    });
+});
+</script>
 
 <style>
     :root {
