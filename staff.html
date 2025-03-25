@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - UniConnect</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #7209b7;
+            --accent: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --success: #2ec4b6;
+            --warning: #fca311;
+            --danger: #e71d36;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 250px;
+            background-color: white;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+            padding: 20px 0;
+            height: 100vh;
+            position: fixed;
+            transition: all 0.3s ease;
+        }
+
+        .logo {
+            padding: 0 20px 20px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--light-gray);
+            margin-bottom: 20px;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 5px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            text-decoration: none;
+            color: var(--dark);
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+        }
+
+        .nav-link i {
+            margin-right: 10px;
+            font-size: 1.1rem;
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            flex: 1;
+            margin-left: 250px;
+            padding: 20px;
+        }
+
+        /* HEADER */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .page-title h1 {
+            font-size: 1.8rem;
+            color: var(--dark);
+        }
+
+        .page-title p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-info {
+            text-align: right;
+            margin-right: 15px;
+        }
+
+        .user-name {
+            font-weight: 600;
+        }
+
+        .user-role {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* STATS CARDS */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .stat-icon.pending {
+            background-color: var(--warning);
+        }
+
+        .stat-icon.in-progress {
+            background-color: var(--primary);
+        }
+
+        .stat-icon.resolved {
+            background-color: var(--success);
+        }
+
+        .stat-icon.total {
+            background-color: var(--secondary);
+        }
+
+        .stat-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .stat-text p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* COMPLAINTS TABLE */
+        .complaints-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .search-filter {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-box {
+            position: relative;
+            margin-right: 15px;
+        }
+
+        .search-box input {
+            padding: 8px 15px 8px 35px;
+            border: 1px solid var(--light-gray);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            width: 200px;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+
+        .filter-dropdown select {
+            padding: 8px 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            background-color: white;
+            cursor: pointer;
+        }
+
+        .complaints-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .complaints-table th {
+            text-align: left;
+            padding: 12px 15px;
+            background-color: var(--light-gray);
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .complaints-table td {
+            padding: 15px;
+            border-bottom: 1px solid var(--light-gray);
+            font-size: 0.9rem;
+        }
+
+        .complaint-id {
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-badge.pending {
+            background-color: rgba(252, 163, 17, 0.1);
+            color: var(--warning);
+        }
+
+        .status-badge.in-progress {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+        }
+
+        .status-badge.resolved {
+            background-color: rgba(46, 196, 182, 0.1);
+            color: var(--success);
+        }
+
+        .priority-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .priority-badge.high {
+            background-color: rgba(231, 29, 54, 0.1);
+            color: var(--danger);
+        }
+
+        .priority-badge.medium {
+            background-color: rgba(252, 163, 17, 0.1);
+            color: var(--warning);
+        }
+
+        .priority-badge.low {
+            background-color: rgba(108, 117, 125, 0.1);
+            color: var(--gray);
+        }
+
+        .action-btn {
+            padding: 5px 10px;
+            border-radius: 4px;
+            border: none;
+            background-color: var(--light-gray);
+            color: var(--dark);
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-right: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn.view {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+        }
+
+        .action-btn.view:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .action-btn.resolve {
+            background-color: rgba(46, 196, 182, 0.1);
+            color: var(--success);
+        }
+
+        .action-btn.resolve:hover {
+            background-color: var(--success);
+            color: white;
+        }
+
+        /* COMPLAINT DETAIL MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 10px;
+            width: 800px;
+            max-width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--light-gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            font-size: 1.5rem;
+            color: var(--gray);
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .complaint-detail {
+            margin-bottom: 20px;
+        }
+
+        .detail-row {
+            display: flex;
+            margin-bottom: 15px;
+        }
+
+        .detail-label {
+            width: 150px;
+            font-weight: 500;
+            color: var(--gray);
+        }
+
+        .detail-value {
+            flex: 1;
+        }
+
+        .complaint-description {
+            background-color: var(--light-gray);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .modal-footer {
+            padding: 20px;
+            border-top: 1px solid var(--light-gray);
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 8px 15px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-outline {
+            background-color: white;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(67, 97, 238, 0.1);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1200px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 70px;
+                overflow: hidden;
+            }
+            
+            .logo span, .nav-link span {
+                display: none;
+            }
+            
+            .nav-link {
+                justify-content: center;
+            }
+            
+            .nav-link i {
+                margin-right: 0;
+                font-size: 1.3rem;
+            }
+            
+            .main-content {
+                margin-left: 70px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .search-filter {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .search-box {
+                margin-right: 0;
+                width: 100%;
+            }
+            
+            .search-box input {
+                width: 100%;
+            }
+            
+            .filter-dropdown {
+                width: 100%;
+            }
+            
+            .filter-dropdown select {
+                width: 100%;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--success);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1100;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.error {
+            background-color: var(--danger);
+        }
+
+        .toast.warning {
+            background-color: var(--warning);
+        }
+
+        .toast i {
+            font-size: 1.2rem;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="logo">
+            <i class="fas fa-university"></i>
+            <span>UniConnect</span>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="#" class="nav-link active">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span>Complaints</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-users"></i>
+                    <span>Students</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-user-shield"></i>
+                    <span>Staff</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Reports</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="page-title">
+                <h1>Complaint Dashboard</h1>
+                <p>Manage and resolve student complaints</p>
+            </div>
+            <div class="user-menu">
+                <div class="user-info">
+                    <div class="user-name">Admin User</div>
+                    <div class="user-role">Support Administrator</div>
+                </div>
+                <div class="user-avatar">AU</div>
+            </div>
+        </header>
+
+        <!-- STATS CARDS -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon pending">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-text">
+                    <h3 id="pending-count">24</h3>
+                    <p>Pending Complaints</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon in-progress">
+                    <i class="fas fa-spinner"></i>
+                </div>
+                <div class="stat-text">
+                    <h3 id="progress-count">12</h3>
+                    <p>In Progress</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon resolved">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="stat-text">
+                    <h3 id="resolved-count">48</h3>
+                    <p>Resolved</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon total">
+                    <i class="fas fa-list-alt"></i>
+                </div>
+                <div class="stat-text">
+                    <h3 id="total-count">84</h3>
+                    <p>Total Complaints</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- COMPLAINTS TABLE -->
+        <section class="complaints-section">
+            <div class="section-header">
+                <h2 class="section-title">Recent Complaints</h2>
+                <div class="search-filter">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="search-input" placeholder="Search complaints..." onkeyup="filterComplaints()">
+                    </div>
+                    <div class="filter-dropdown">
+                        <select id="status-filter" onchange="filterComplaints()">
+                            <option value="all">All Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="in-progress">In Progress</option>
+                            <option value="resolved">Resolved</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <table class="complaints-table" id="complaints-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Student</th>
+                        <th>Category</th>
+                        <th>Priority</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="complaints-body">
+                    <!-- Complaints will be dynamically inserted here -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <!-- COMPLAINT DETAIL MODAL -->
+    <div class="modal" id="complaintModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Complaint Details</h3>
+                <button class="modal-close" onclick="closeComplaintModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="complaint-detail">
+                    <div class="detail-row">
+                        <div class="detail-label">Complaint ID:</div>
+                        <div class="detail-value" id="modal-complaint-id">#IT-2025-0342</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Student Name:</div>
+                        <div class="detail-value" id="modal-student-name">John Smith (ID: S123456)</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Category:</div>
+                        <div class="detail-value" id="modal-category">IT Support</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Priority:</div>
+                        <div class="detail-value" id="modal-priority"><span class="priority-badge high">High</span></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Date Submitted:</div>
+                        <div class="detail-value" id="modal-date">March 12, 2025 at 10:45 AM</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Status:</div>
+                        <div class="detail-value" id="modal-status"><span class="status-badge in-progress">In Progress</span></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Assigned To:</div>
+                        <div class="detail-value" id="modal-assigned">IT Support Team (Mark Johnson)</div>
+                    </div>
+                </div>
+                
+                <div class="complaint-description">
+                    <h4>Description:</h4>
+                    <p id="modal-description">I'm unable to connect to the university WiFi on my laptop. The connection keeps dropping every few minutes, making it impossible to attend online classes or complete assignments. I've tried forgetting the network and reconnecting, restarting my device, and even using different browsers, but the issue persists. This is affecting my ability to participate in virtual lectures and submit assignments on time.</p>
+                </div>
+                
+                <div class="complaint-attachments">
+                    <h4>Attachments:</h4>
+                    <div class="attachment-list" id="modal-attachments">
+                        <div class="attachment-item">
+                            <i class="fas fa-file-image"></i> screenshot_error.png
+                        </div>
+                        <div class="attachment-item">
+                            <i class="fas fa-file-alt"></i> network_logs.txt
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="complaint-updates">
+                    <h4>Updates:</h4>
+                    <div class="update-list" id="update-list">
+                        <div class="update-item">
+                            <div class="update-header">
+                                <strong>Mark Johnson</strong> (IT Support) - <small>March 12, 2025 at 2:30 PM</small>
+                            </div>
+                            <div class="update-content">
+                                <p>We've identified the issue as a driver compatibility problem with your network adapter. Please try updating your network drivers and let us know if the issue persists.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="add-update">
+                    <h4>Add Update:</h4>
+                    <textarea id="update-text" rows="4" placeholder="Add your response or update status..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeComplaintModal()">Close</button>
+                <button class="btn btn-primary" onclick="saveUpdate()">Save Changes</button>
+                <button class="btn btn-primary" id="resolve-btn" onclick="resolveComplaint()">Mark as Resolved</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toast-message">Complaint resolved successfully!</span>
+    </div>
+
+    <script>
+        // Sample complaint data
+        const complaints = [
+            {
+                id: "IT-2025-0342",
+                student: "John Smith",
+                category: "IT Support",
+                priority: "high",
+                date: "Mar 12, 2025",
+                status: "in-progress",
+                description: "I'm unable to connect to the university WiFi on my laptop. The connection keeps dropping every few minutes, making it impossible to attend online classes or complete assignments.",
+                attachments: ["screenshot_error.png", "network_logs.txt"],
+                assigned: "IT Support Team (Mark Johnson)",
+                updates: [
+                    {
+                        author: "Mark Johnson",
+                        role: "IT Support",
+                        date: "March 12, 2025 at 2:30 PM",
+                        content: "We've identified the issue as a driver compatibility problem with your network adapter. Please try updating your network drivers and let us know if the issue persists."
+                    }
+                ]
+            },
+            {
+                id: "AC-2025-0189",
+                student: "Sarah Johnson",
+                category: "Academic",
+                priority: "medium",
+                date: "Mar 11, 2025",
+                status: "pending",
+                description: "I need to request an extension for my term paper due to medical reasons. I have a doctor's note to support my request.",
+                attachments: ["doctors_note.pdf"],
+                assigned: "Academic Services",
+                updates: []
+            },
+            {
+                id: "FA-2025-0075",
+                student: "Michael Brown",
+                category: "Financial Aid",
+                priority: "high",
+                date: "Mar 10, 2025",
+                status: "resolved",
+                description: "My financial aid application shows as incomplete, but I've submitted all required documents. Please check and update my status.",
+                attachments: ["documents.zip"],
+                assigned: "Financial Aid Office (Lisa Wong)",
+                updates: [
+                    {
+                        author: "Lisa Wong",
+                        role: "Financial Aid",
+                        date: "March 10, 2025 at 3:45 PM",
+                        content: "We've reviewed your documents and your application is now complete. Your financial aid package will be processed within 3 business days."
+                    },
+                    {
+                        author: "Lisa Wong",
+                        role: "Financial Aid",
+                        date: "March 11, 2025 at 10:15 AM",
+                        content: "Your financial aid has been approved. You can view the details in your student portal."
+                    }
+                ]
+            },
+            {
+                id: "HS-2025-0221",
+                student: "Emily Davis",
+                category: "Housing",
+                priority: "low",
+                date: "Mar 9, 2025",
+                status: "pending",
+                description: "Requesting a room change due to incompatible roommate situation.",
+                attachments: [],
+                assigned: "Housing Services",
+                updates: []
+            },
+            {
+                id: "DS-2025-0156",
+                student: "Robert Wilson",
+                category: "Dining",
+                priority: "medium",
+                date: "Mar 8, 2025",
+                status: "in-progress",
+                description: "Food allergy concerns in the dining hall - need to discuss special meal arrangements.",
+                attachments: ["allergy_test_results.pdf"],
+                assigned: "Dining Services (Chef Martinez)",
+                updates: [
+                    {
+                        author: "Chef Martinez",
+                        role: "Dining Services",
+                        date: "March 9, 2025 at 11:20 AM",
+                        content: "We've reviewed your allergy information and will arrange a meeting to discuss your meal plan options."
+                    }
+                ]
+            }
+        ];
+
+        // Current complaint being viewed in modal
+        let currentComplaint = null;
+
+        // DOM elements
+        const complaintsBody = document.getElementById('complaints-body');
+        const pendingCount = document.getElementById('pending-count');
+        const progressCount = document.getElementById('progress-count');
+        const resolvedCount = document.getElementById('resolved-count');
+        const totalCount = document.getElementById('total-count');
+
+        // Initialize the dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            renderComplaints();
+            updateStats();
+        });
+
+        // Render complaints table
+        function renderComplaints(filteredComplaints = complaints) {
+            complaintsBody.innerHTML = '';
+            
+            filteredComplaints.forEach(complaint => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="complaint-id">#${complaint.id}</td>
+                    <td>${complaint.student}</td>
+                    <td>${complaint.category}</td>
+                    <td><span class="priority-badge ${complaint.priority}">${formatPriority(complaint.priority)}</span></td>
+                    <td>${complaint.date}</td>
+                    <td><span class="status-badge ${complaint.status}">${formatStatus(complaint.status)}</span></td>
+                    <td>
+                        <button class="action-btn view" onclick="viewComplaint('${complaint.id}')">View</button>
+                        <button class="action-btn resolve" onclick="toggleResolve('${complaint.id}')">
+                            ${complaint.status === 'resolved' ? 'Reopen' : 'Resolve'}
+                        </button>
+                    </td>
+                `;
+                complaintsBody.appendChild(row);
+            });
+        }
+
+        // Update statistics counters
+        function updateStats() {
+            const pending = complaints.filter(c => c.status === 'pending').length;
+            const inProgress = complaints.filter(c => c.status === 'in-progress').length;
+            const resolved = complaints.filter(c => c.status === 'resolved').length;
+            
+            pendingCount.textContent = pending;
+            progressCount.textContent = inProgress;
+            resolvedCount.textContent = resolved;
+            totalCount.textContent = complaints.length;
+        }
+
+        // Format priority for display
+        function formatPriority(priority) {
+            return priority.charAt(0).toUpperCase() + priority.slice(1);
+        }
+
+        // Format status for display
+        function formatStatus(status) {
+            return status.split('-').map(word => 
+                word.charAt(0).toUpperCase() + word.slice(1)
+            ).join(' ');
+        }
+
+        // Filter complaints based on search and status
+        function filterComplaints() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const statusFilter = document.getElementById('status-filter').value;
+            
+            let filtered = complaints.filter(complaint => {
+                const matchesSearch = 
+                    complaint.id.toLowerCase().includes(searchTerm) ||
+                    complaint.student.toLowerCase().includes(searchTerm) ||
+                    complaint.category.toLowerCase().includes(searchTerm);
+                
+                const matchesStatus = 
+                    statusFilter === 'all' || 
+                    complaint.status === statusFilter;
+                
+                return matchesSearch && matchesStatus;
+            });
+            
+            renderComplaints(filtered);
+        }
+
+        // View complaint details in modal
+        function viewComplaint(complaintId) {
+            currentComplaint = complaints.find(c => c.id === complaintId);
+            
+            if (!currentComplaint) return;
+            
+            // Update modal content
+            document.getElementById('modal-complaint-id').textContent = `#${currentComplaint.id}`;
+            document.getElementById('modal-student-name').textContent = `${currentComplaint.student} (ID: S${Math.floor(100000 + Math.random() * 900000)})`;
+            document.getElementById('modal-category').textContent = currentComplaint.category;
+            
+            // Update priority badge
+            const priorityBadge = document.createElement('span');
+            priorityBadge.className = `priority-badge ${currentComplaint.priority}`;
+            priorityBadge.textContent = formatPriority(currentComplaint.priority);
+            document.getElementById('modal-priority').innerHTML = '';
+            document.getElementById('modal-priority').appendChild(priorityBadge);
+            
+            document.getElementById('modal-date').textContent = `${currentComplaint.date} at ${getRandomTime()}`;
+            
+            // Update status badge
+            const statusBadge = document.createElement('span');
+            statusBadge.className = `status-badge ${currentComplaint.status}`;
+            statusBadge.textContent = formatStatus(currentComplaint.status);
+            document.getElementById('modal-status').innerHTML = '';
+            document.getElementById('modal-status').appendChild(statusBadge);
+            
+            document.getElementById('modal-assigned').textContent = currentComplaint.assigned;
+            document.getElementById('modal-description').textContent = currentComplaint.description;
+            
+            // Update attachments
+            const attachmentsContainer = document.getElementById('modal-attachments');
+            attachmentsContainer.innerHTML = '';
+            currentComplaint.attachments.forEach(file => {
+                const attachment = document.createElement('div');
+                attachment.className = 'attachment-item';
+                
+                const icon = document.createElement('i');
+                const ext = file.split('.').pop();
+                if (['png', 'jpg', 'jpeg', 'gif'].includes(ext)) {
+                    icon.className = 'fas fa-file-image';
+                } else if (['pdf'].includes(ext)) {
+                    icon.className = 'fas fa-file-pdf';
+                } else if (['zip', 'rar'].includes(ext)) {
+                    icon.className = 'fas fa-file-archive';
+                } else {
+                    icon.className = 'fas fa-file-alt';
+                }
+                
+                attachment.appendChild(icon);
+                attachment.appendChild(document.createTextNode(` ${file}`));
+                attachmentsContainer.appendChild(attachment);
+            });
+            
+            // Update updates
+            const updatesContainer = document.getElementById('update-list');
+            updatesContainer.innerHTML = '';
+            currentComplaint.updates.forEach(update => {
+                const updateItem = document.createElement('div');
+                updateItem.className = 'update-item';
+                updateItem.innerHTML = `
+                    <div class="update-header">
+                        <strong>${update.author}</strong> (${update.role}) - <small>${update.date}</small>
+                    </div>
+                    <div class="update-content">
+                        <p>${update.content}</p>
+                    </div>
+                `;
+                updatesContainer.appendChild(updateItem);
+            });
+            
+            // Update resolve button text
+            document.getElementById('resolve-btn').textContent = 
+                currentComplaint.status === 'resolved' ? 'Reopen Complaint' : 'Mark as Resolved';
+            
+            // Open modal
+            document.getElementById('complaintModal').style.display = 'flex';
+        }
+
+        // Close complaint modal
+        function closeComplaintModal() {
+            document.getElementById('complaintModal').style.display = 'none';
+            currentComplaint = null;
+        }
+
+        // Toggle resolve status
+        function toggleResolve(complaintId) {
+            const complaint = complaints.find(c => c.id === complaintId);
+            if (!complaint) return;
+            
+            if (complaint.status === 'resolved') {
+                complaint.status = 'pending';
+                showToast('Complaint reopened successfully!');
+            } else {
+                complaint.status = 'resolved';
+                showToast('Complaint resolved successfully!');
+            }
+            
+            renderComplaints();
+            updateStats();
+            
+            // If this is the current complaint in the modal, update the modal
+            if (currentComplaint && currentComplaint.id === complaintId) {
+                viewComplaint(complaintId);
+            }
+        }
+
+        // Resolve current complaint from modal
+        function resolveComplaint() {
+            if (!currentComplaint) return;
+            toggleResolve(currentComplaint.id);
+        }
+
+        // Save update to complaint
+        function saveUpdate() {
+            if (!currentComplaint) return;
+            
+            const updateText = document.getElementById('update-text').value.trim();
+            if (!updateText) return;
+            
+            // Add new update
+            currentComplaint.updates.push({
+                author: "Admin User",
+                role: "Support Administrator",
+                date: new Date().toLocaleString('en-US', {
+                    month: 'long',
+                    day: 'numeric',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                }),
+                content: updateText
+            });
+            
+            // Change status to in-progress if it was pending
+            if (currentComplaint.status === 'pending') {
+                currentComplaint.status = 'in-progress';
+                updateStats();
+            }
+            
+            // Clear update textarea
+            document.getElementById('update-text').value = '';
+            
+            // Refresh view
+            viewComplaint(currentComplaint.id);
+            renderComplaints();
+            
+            showToast('Update saved successfully!');
+        }
+
+        // Show toast notification
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            
+            toastMessage.textContent = message;
+            toast.className = `toast ${type}`;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Helper function to generate random time
+        function getRandomTime() {
+            const hours = Math.floor(Math.random() * 12) + 1;
+            const minutes = Math.floor(Math.random() * 60).toString().padStart(2, '0');
+            const ampm = Math.random() > 0.5 ? 'AM' : 'PM';
+            return `${hours}:${minutes} ${ampm}`;
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('complaintModal')) {
+                closeComplaintModal();
+            }
+        }
+    </script>
+</body>
+</html>
